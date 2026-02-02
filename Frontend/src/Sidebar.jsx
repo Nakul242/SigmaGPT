@@ -11,6 +11,10 @@ function Sidebar() {
         try {
             const response = await fetch('http://localhost:8080/api/thread');
             const res = await response.json();
+            if (!Array.isArray(res)) {
+                console.error("Expected array, got:", res);
+                return;
+            }
             const filteredData = res.map(thread => ({ threadId: thread.threadId, title: thread.title}));
             console.log("Fetched threads:", filteredData);
             setAllThreads(filteredData);
